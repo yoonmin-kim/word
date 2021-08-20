@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sql>
+    <test>
+        SELECT * FROM report
+    </test>
+
+    <test2>
+        SELECT * FROM report2
+    </test2>
+
+</sql>

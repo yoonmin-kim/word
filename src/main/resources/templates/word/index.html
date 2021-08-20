@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>레포트저장</title>
+    <script th:inline="javascript">
+        function wordfrmSubmit() {
+            var f = document.wordfrm;
+            // f.filePath.value = f.file.value;
+            f.submit();
+        }
+    </script>
+</head>
+<body>
+<form th:name="wordfrm" th:action th:method="post" enctype="multipart/form-data">
+    <div th:if="${errors?.containsKey('globalMsg')}">
+        <p class="field-error" th:text="${errors['globalMsg']}">전체 오류 메세지</p>
+    </div>
+
+    <input th:type="file" th:name="file" required><br>
+<!--    <input th:type="hidden" th:name="filePath">-->
+    <input th:type="button" th:onclick="wordfrmSubmit()" th:value="저장">
+    <a th:href="@{/}" th:text="홈"></a>
+</form>
+</body>
+</html>
