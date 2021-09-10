@@ -2,6 +2,7 @@ package hello.toy.word.controller;
 
 import hello.toy.word.service.WordService;
 import hello.toy.word.util.WordUtils;
+import hello.toy.word.util.properties.MessageUtils;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class WordController {
 
     private final WordService wordService;
+    private final MessageUtils messageUtils;
 
     @GetMapping
     public String index() {
@@ -37,21 +39,18 @@ public class WordController {
     public String save(@ModelAttribute FileSaveForm fileSaveForm, Model model) throws IOException, ClassNotFoundException {
 
         MultipartFile file = fileSaveForm.getFile();
-        //String filePath = fileSaveForm.getFilePath();
-        String fileName = file.getOriginalFilename();
-        String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
         //검증 오류 결과를 보관
-        Map<String, String> errors = new HashMap<>();
-        if (!"docx".equals(extension)) {
-            errors.put("globalMsg", "파일의 확장자가 docx 가 아닙니다.");
-            model.addAttribute("errors", errors);
+        Map<String, String> msg = new HashMap<>();
+        if (!wordService.validateExtension(file)) {
+            msg.put("globalMsg", messageUtils.getProperty("error.word.save"));
+            model.addAttribute("msg", msg);
             return "word/index";
         }
 
-        wordService.makeReport(file.getInputStream(), fileName);
-        errors.put("globalMsg", "파일 저장이 성공적으로 완료되었습니다.");
-        model.addAttribute("errors", errors);
+        wordService.makeReport(file);
+        msg.put("globalMsg", messageUtils.getProperty("success.word.save"));
+        model.addAttribute("msg", msg);
         return "word/index";
     }
 

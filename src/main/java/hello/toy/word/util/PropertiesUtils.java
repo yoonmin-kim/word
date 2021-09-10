@@ -7,20 +7,18 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @Slf4j
 public class PropertiesUtils {
 
-    private static Map<String, String> values = new HashMap<>();
-
-    private PropertiesUtils() {}
+    private static Map<String, String> values = new ConcurrentHashMap<>();
 
     @PostConstruct
-    public static void load() throws IOException {
+    public void load() throws IOException {
         ClassPathResource classPathResource = new ClassPathResource("properties/dbsetting.properties");
         FileReader fileReader = new FileReader(classPathResource.getFile());
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -48,7 +46,7 @@ public class PropertiesUtils {
         fileReader.close();
     }
 
-    public static String read() {
+    public String read() {
         StringBuilder builder = new StringBuilder();
         Set<String> keys = values.keySet();
         for (String key : keys) {
@@ -58,7 +56,7 @@ public class PropertiesUtils {
         return builder.toString();
     }
 
-    public static void write(String propContext) throws IOException {
+    public boolean write(String propContext) throws IOException {
         ClassPathResource classPathResource = new ClassPathResource("properties/dbsetting.properties");
         FileWriter fileWriter = new FileWriter(classPathResource.getFile());
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -69,17 +67,19 @@ public class PropertiesUtils {
 
         clearValues();
         load();
+
+        return true;
     }
 
-    public static String getValues(String key) {
+    public String getValues(String key) {
         return values.get(key);
     }
 
-    public static void setValues(String key, String value) {
+    public void setValues(String key, String value) {
         values.put(key, value);
     }
 
-    public static void clearValues() {
+    public void clearValues() {
         values.clear();
     }
 

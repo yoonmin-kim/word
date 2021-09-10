@@ -1,20 +1,21 @@
 package hello.toy.word.util;
 
 import org.apache.poi.xwpf.usermodel.*;
-import org.springframework.util.StringUtils;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Component
 public class WordUtils {
 
-    private WordUtils() {}
-
     //C:/intellij-workspace/test.docx
-    public static void makeReport(InputStream fileInputStream, String fileName, String[] targetWordArr, String[] replaceWordArr) throws IOException {
-        XWPFDocument document = new XWPFDocument(fileInputStream);
+    public void makeReport(MultipartFile file, String[] targetWordArr, String[] replaceWordArr) throws IOException {
+        XWPFDocument document = new XWPFDocument(file.getInputStream());
 
         for (XWPFParagraph p : document.getParagraphs()) {
             List<XWPFRun> runs = p.getRuns();
@@ -40,14 +41,14 @@ public class WordUtils {
 
         String localDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("(yyyy-MM-dd)"));
         String downLoadDir = System.getProperty("user.home") + "\\Downloads";
-        FileOutputStream fos = new FileOutputStream(downLoadDir + "/" + localDateTime + fileName);
+        FileOutputStream fos = new FileOutputStream(downLoadDir + "/" + localDateTime + file.getOriginalFilename());
         document.write(fos);
 
         fos.close();
         document.close();
     }
 
-    private static void replaceWord(String[] targetWordArr, String[] replaceWordArr, XWPFRun r) {
+    private void replaceWord(String[] targetWordArr, String[] replaceWordArr, XWPFRun r) {
         String text = r.getText(0);
         for(int j = 0 ; j < targetWordArr.length ; j++){
             if (text != null && text.contains(targetWordArr[j])) {

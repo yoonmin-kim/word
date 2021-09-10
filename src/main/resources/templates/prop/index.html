@@ -15,8 +15,12 @@
 <body>
 <form th:action th:method="post">
     <input th:type="submit" th:value="저장">
-    <a th:href="@{/}" th:text="홈"></a><br>
-    <textarea style="width: 600px; height: 300px;" th:text="${prop}" th:name="prop"></textarea><br>
+    <a th:href="@{/}" th:text="홈"></a>
+    <div th:if="${errors?.containsKey('globalError')}">
+        <p class="field-error" th:text="${errors['globalError']}">전체 오류 메세지</p>
+    </div>
+    <br>
+    <textarea style="width: 600px; height: 300px;" th:text="${props}" th:name="props"></textarea><br>
     <input th:type="submit" th:value="저장">
     <a th:href="@{/}" th:text="홈"></a>
 </form>

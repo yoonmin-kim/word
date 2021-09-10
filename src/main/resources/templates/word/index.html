@@ -9,19 +9,23 @@
     <script th:inline="javascript">
         function wordfrmSubmit() {
             var f = document.wordfrm;
-            // f.filePath.value = f.file.value;
+
+            if(!f.file.value){
+                alert([[${@messageUtils.getProperty('valid.word.save')}]]);
+                return;
+            }
+
             f.submit();
         }
     </script>
 </head>
 <body>
 <form th:name="wordfrm" th:action th:method="post" enctype="multipart/form-data">
-    <div th:if="${errors?.containsKey('globalMsg')}">
-        <p class="field-error" th:text="${errors['globalMsg']}">전체 오류 메세지</p>
+    <div th:if="${msg?.containsKey('globalMsg')}">
+        <p class="field-error" th:text="${msg['globalMsg']}">전체 오류 메세지</p>
     </div>
 
     <input th:type="file" th:name="file" required><br>
-<!--    <input th:type="hidden" th:name="filePath">-->
     <input th:type="button" th:onclick="wordfrmSubmit()" th:value="저장">
     <a th:href="@{/}" th:text="홈"></a>
 </form>
