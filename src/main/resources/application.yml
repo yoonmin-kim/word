@@ -19,6 +19,13 @@ spring:
     multipart:
       max-file-size: 1024MB
       max-request-size: 1024MB
+
+
+#  messages:
+#    basename: messages, test
+#    encoding: UTF-8
+#    cache-duration: 2
+
 server:
   tomcat:
     max-http-form-post-size: 1024MB
