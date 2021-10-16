@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>사이트추가</title>
+</head>
+<body>
+
+<form th:action="|/save|" th:method="post">
+  <input th:type="text" th:name="siteName" th:placeholder="|사이트명을 입력해주세요|">
+  <input th:type="submit" th:value="저장">
+</form>
+
+</body>
+</html>

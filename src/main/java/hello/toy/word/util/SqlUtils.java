@@ -23,13 +23,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class SqlUtils {
 
-    private static Map<String, String> values = new ConcurrentHashMap<>();
+	public static final String SQL_XML_CLASSPATH = "sql/sql.xml";
+	private static Map<String, String> values = new ConcurrentHashMap<>();
 
     private final PropertiesUtils propertiesUtils;
 
     @PostConstruct
     public void load() throws ParserConfigurationException, IOException, SAXException {
-        ClassPathResource resource = new ClassPathResource("sql/sql.xml");
+        ClassPathResource resource = new ClassPathResource(SQL_XML_CLASSPATH);
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         Document document = docBuilder.parse(resource.getFile());
@@ -93,7 +94,7 @@ public class SqlUtils {
         return values.keySet();
     }
 
-    public String getReplaceWord(String targetWord) throws ClassNotFoundException {
+    public String getReplaceWord(String targetWord) throws ClassNotFoundException, SQLException {
 
         Class.forName(propertiesUtils.getValues("db.classforname"));
 
@@ -115,8 +116,6 @@ public class SqlUtils {
                 replaceWord = rs.getString(targetWord);
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         } finally {
             try {
                 if(rs != null)

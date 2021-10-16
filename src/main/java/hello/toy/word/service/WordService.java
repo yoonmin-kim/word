@@ -8,15 +8,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 
 @RequiredArgsConstructor
 @Service
 public class WordService {
 
-    private final WordUtils wordUtils;
+	public static final String WORD_EXTENSION = "docx";
+	public static final String EXTENSION_DELIMITER = ".";
+	private final WordUtils wordUtils;
     private final SqlUtils sqlUtils;
 
-    public void makeReport(MultipartFile file) throws IOException, ClassNotFoundException {
+    public void makeReport(MultipartFile file) throws IOException, ClassNotFoundException, SQLException {
         String[] targetWordArr = sqlUtils.getKeys().toArray(new String[sqlUtils.getKeys().size()]);
         String[] replaceWordArr = new String[targetWordArr.length];
 
@@ -30,9 +33,9 @@ public class WordService {
 
     public boolean validateExtension(MultipartFile file) {
         String fileName = file.getOriginalFilename();
-        String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String extension = fileName.substring(fileName.lastIndexOf(EXTENSION_DELIMITER) + 1);
 
-        if (!"docx".equals(extension)) {
+        if (!WORD_EXTENSION.equals(extension)) {
             return false;
         }
         return true;

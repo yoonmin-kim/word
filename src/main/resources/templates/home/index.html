@@ -8,9 +8,18 @@
     <title>Document</title>
 </head>
 <body>
-<a th:href="@{/word}" th:text="워드"></a><br>
-<a th:href="@{/prop}" th:text="db설정"></a><br>
-<a th:href="@{/sql}" th:text="sql설정"></a><br>
+<ul>
+    <li th:each="site : ${sites}">
+        <div>
+            <span th:text="${site.siteName}">사이트명</span><a th:href="@{/delete/{id}(id=${site.id})}" th:text="삭제"></a>
+        </div>
+        <div>
+            <a th:href="@{/dbsetting/save/{id}(id=${site.id})}" th:text="DB설정"></a>
+            <a th:href="@{/sql/save/{id}(id=${site.id})}" th:text="SQL설정"></a>
+        </div>
+    </li>
+</ul>
 
+<a th:href="@{/save}" th:text="사이트추가"></a>
 </body>
 </html>

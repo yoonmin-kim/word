@@ -14,7 +14,7 @@ public class WordApplication {
 		SpringApplication.run(WordApplication.class, args);
 	}
 
-	@Bean(name = "messageSource")
+	// @Bean(name = "messageSource")
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasename("classpath:/messages");
