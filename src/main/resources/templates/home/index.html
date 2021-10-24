@@ -5,21 +5,24 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>월별 레포트 작성기</title>
 </head>
 <body>
 <ul>
-    <li th:each="site : ${sites}">
+    <li th:each="site : ${siteList}">
         <div>
-            <span th:text="${site.siteName}">사이트명</span><a th:href="@{/delete/{id}(id=${site.id})}" th:text="삭제"></a>
+            <span th:text="${site.siteName}">사이트명</span><a th:href="@{/delete/{id}(id=${site.siteId})}"
+                                                           th:text="삭제"></a>
         </div>
         <div>
-            <a th:href="@{/dbsetting/save/{id}(id=${site.id})}" th:text="DB설정"></a>
-            <a th:href="@{/sql/save/{id}(id=${site.id})}" th:text="SQL설정"></a>
+            <a th:href="@{/dbsetting/index/{id}(id=${site.siteId})}" th:text="DB설정"></a>
+            <a th:href="@{/siteSql/index/{id}(id=${site.siteId})}" th:text="SQL설정"></a><br>
+            <a th:href="@{/word/index/{id}(id=${site.siteId})}" th:text="레포트작성"></a>
         </div>
     </li>
 </ul>
 
-<a th:href="@{/save}" th:text="사이트추가"></a>
+<a th:href="@{/save}" th:text="사이트추가"></a><br>
+<a th:href="@{/sql/index}" th:text="SQL추가"></a>
 </body>
 </html>

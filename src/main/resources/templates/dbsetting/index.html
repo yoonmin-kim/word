@@ -8,12 +8,12 @@
 
 <form th:action="|/dbsetting/save|" th:object="${dbsetting}" th:method="post">
     <input th:type="hidden" th:field="*{id}">
-    <input th:type="hidden" th:name="siteId" th:value="*{siteDto.id}">
-  classForName : <input th:type="text" th:field="*{classForName}"><br>
-  url : <input th:type="text" th:field="*{url}"><br>
-  user: <input th:type="text" th:field="*{user}"><br>
-  password : <input th:type="text" th:field="*{password}"><br>
-  <input th:type="submit" th:value="저장">
+    <input th:type="hidden" th:name="siteId" th:value="*{siteDto.siteId}">
+    classForName : <input th:type="text" th:field="*{classForName}"><br>
+    url : <input th:type="text" th:field="*{url}"><br>
+    user: <input th:type="text" th:field="*{user}"><br>
+    password : <input th:type="text" th:field="*{password}"><br>
+    <input th:type="submit" th:value="저장">
 
 </form>
 

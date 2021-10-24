@@ -1,6 +1,5 @@
 package hello.toy.word.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +13,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Dbsetting {
+public class Dbsetting extends BaseTime {
 
 	@Id
 	@GeneratedValue

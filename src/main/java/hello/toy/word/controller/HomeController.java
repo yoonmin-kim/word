@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import hello.toy.word.domain.dto.SiteDto;
 import hello.toy.word.service.HomeService;
@@ -20,27 +19,27 @@ public class HomeController {
 
 	private final HomeService homeService;
 
-    @GetMapping("/")
-    public String index(Model model) {
-		model.addAttribute("sites", homeService.findAll());
-        return "home/index";
-    }
+	@GetMapping("/")
+	public String index(Model model) {
+		model.addAttribute("siteList", homeService.findAll());
+		return "home/index";
+	}
 
-    @GetMapping("/save")
+	@GetMapping("/save")
 	public String saveIndex() {
 		return "home/save";
 	}
 
-    @PostMapping("/save")
+	@PostMapping("/save")
 	public String save(@ModelAttribute SiteDto siteDto) {
-    	homeService.save(siteDto);
+		homeService.save(siteDto);
 
 		return "redirect:/";
 	}
 
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable("id") Long id) {
-    	homeService.delete(id);
+		homeService.delete(id);
 		return "redirect:/";
 	}
 

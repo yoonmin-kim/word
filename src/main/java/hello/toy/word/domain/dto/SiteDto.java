@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class SiteDto {
 
-	private Long id;
+	private Long siteId;
 	private String siteName;
 }

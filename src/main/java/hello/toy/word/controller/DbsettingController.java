@@ -2,7 +2,6 @@ package hello.toy.word.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,15 +15,15 @@ import hello.toy.word.service.DbsettingService;
 import hello.toy.word.service.HomeService;
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/dbsetting")
 @RequiredArgsConstructor
+@RequestMapping("/dbsetting")
 @Controller
 public class DbsettingController {
 
 	private final DbsettingService dbsettingService;
 	private final HomeService homeService;
 
-	@GetMapping("/save/{id}")
+	@GetMapping("/index/{id}")
 	public String index(Model model, @PathVariable("id") Long siteId) {
 		DbsettingDto findDbsetting = dbsettingService.findBySiteId(siteId);
 		model.addAttribute("dbsetting", findDbsetting);
@@ -49,7 +48,6 @@ public class DbsettingController {
 	}
 
 	private boolean isUpdate(DbsettingDto dbsettingDto) {
-		return !"null".equals(String.valueOf(dbsettingDto.getId())) &&
-			StringUtils.hasText(String.valueOf(dbsettingDto.getId()));
+		return dbsettingDto.getId() != null;
 	}
 }

@@ -1,17 +1,22 @@
 package hello.toy.word.domain;
 
-import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
 @Getter
-public class Sql {
+@Setter
+@NoArgsConstructor
+@Entity
+public class Sql extends BaseTime {
 
 	@Id
 	@GeneratedValue
@@ -20,6 +25,6 @@ public class Sql {
 	private String targetName;
 	private String query;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	private Site site;
+	@OneToMany(mappedBy = "sql")
+	private List<SiteSql> siteSqlList = new ArrayList<>();
 }

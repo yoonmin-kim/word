@@ -21,17 +21,18 @@ public class DbsettingService {
 
 	private final DbsettingRepository dbsettingRepository;
 	private final HomeRepository homeRepository;
+	private final ObjectMapper objectMapper;
 
 	@Transactional
 	public Dbsetting save(DbsettingDto dbsettingDto) {
 		return dbsettingRepository.save(
-			ObjectMapper.INSTANCE.toDbsetting(dbsettingDto)
+			objectMapper.toDbsetting(dbsettingDto)
 		);
 	}
 
 	public DbsettingDto findBySiteId(Long siteId) {
 		Optional<Dbsetting> findDbSetting = dbsettingRepository.findBySiteId(siteId);
-		return findDbSetting.map(dbsetting -> ObjectMapper.INSTANCE.toDbsettingDto(dbsetting))
+		return findDbSetting.map(dbsetting -> objectMapper.toDbsettingDto(dbsetting))
 			.orElse(defaultDbsetting(siteId));
 
 	}
@@ -40,7 +41,7 @@ public class DbsettingService {
 		Optional<Site> findSite = homeRepository.findById(siteId);
 		DbsettingDto dbsettingDto = new DbsettingDto();
 		dbsettingDto.putSiteDto(
-			findSite.map(site -> ObjectMapper.INSTANCE.toSiteDto(site))
+			findSite.map(site -> objectMapper.toSiteDto(site))
 				.orElse(new SiteDto())
 		);
 		return dbsettingDto;

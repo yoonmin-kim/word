@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL설정</title>
+</head>
+<body>
+<div th:if="${msg?.containsKey('globalMsg')}">
+    <p th:text="${msg['globalMsg']}">전체 오류 메세지</p>
+</div>
+
+<ul>
+    <li th:each="sqlSite : ${sqlSiteList}">
+        <span th:text="${sqlSite.targetName}"></span> : <span th:text="${sqlSite.query}"></span>
+        <button th:onclick="|sqlDelete('${sqlSite.sqlId}')|" th:text="삭제"></button>
+    </li>
+</ul>
+<hr>
+<form th:name="siteSqlForm" th:action="|/siteSql/save|" th:method="post">
+    <input th:type="hidden" th:name="siteId" th:value="${siteId}">
+    <input th:type="hidden" th:name="sqlId" th:id="sqlId">
+    <!--    <input th:type="submit" th:value="저장">-->
+</form>
+<a th:href="@{/}" th:text="홈"></a>
+
+<ul>
+    <li th:each="sql : ${sqlList}">
+        <span th:text="${sql.targetName}"></span> : <span th:text="${sql.query}"></span>
+        <button th:onclick="|sqlSave('${sql.sqlId}')|" th:text="저장"></button>
+    </li>
+</ul>
+<script th:inline="javascript">
+    function sqlSave(sqlId) {
+        const f = document.siteSqlForm;
+        f.sqlId.value = sqlId;
+        f.submit();
+    }
+
+    function sqlDelete(sqlId) {
+        const f = document.siteSqlForm;
+        f.action = "/siteSql/delete"
+        f.sqlId.value = sqlId;
+        f.submit();
+    }
+</script>
+</body>
+</html>

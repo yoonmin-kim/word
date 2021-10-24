@@ -1,54 +1,57 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.3'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.5.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
 
 group = 'hello.toy'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
 sourceCompatibility = '17'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+repositories {
+    mavenCentral()
 }
 
-repositories {
-	mavenCentral()
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
-	implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
-	annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final'
+    implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding
+    implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: '0.2.0'
 
-	implementation group: 'com.h2database', name: 'h2', version: '1.4.199'
-	implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
-	implementation group: 'org.apache.commons', name: 'commons-compress', version: '1.18'
-	implementation group: 'org.apache.poi', name: 'poi', version: '4.1.2'
-	implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
-	implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
-	implementation group: 'org.apache.commons', name: 'commons-configuration2', version: '2.2'
-	implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+
+    implementation group: 'com.h2database', name: 'h2', version: '1.4.199'
+    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+    implementation group: 'org.apache.commons', name: 'commons-compress', version: '1.18'
+    implementation group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+    implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
+    implementation group: 'org.apache.commons', name: 'commons-configuration2', version: '2.2'
+    implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
 //	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.5.3'
 
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'mysql:mysql-connector-java'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'mysql:mysql-connector-java'
 
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final'
 
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
 
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
